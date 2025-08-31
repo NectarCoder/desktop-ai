@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+
+# Build output
+/dist/
+/build/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Webpack
+webpack-stats.json
+
+# Electron
+*.asar
+
+# Environment variables
+.env
+.env.*
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage/
+
+# Others
+public/*.DS_Store
+public/*.log
+.DS_Store
+Thumbs.db
