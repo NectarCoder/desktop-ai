@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DesktopAI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .tab-bar {
+      display: flex;
+      background-color: #f1f1f1;
+      border-bottom: 1px solid #ccc;
+    }
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-right: 1px solid #ccc;
+      background-color: #e9e9e9;
+    }
+    .tab.active {
+      background-color: #fff;
+    }
+    .content {
+      flex: 1;
+      position: relative;
+    }
+    webview {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    webview.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="tab-bar">
+    <div class="tab active" data-url="https://chat.openai.com">ChatGPT</div>
+    <div class="tab" data-url="https://notebooklm.google.com">NotebookLM</div>
+    <div class="tab" data-url="https://gemini.google.com">Gemini</div>
+  </div>
+  <div class="content">
+    <webview id="webview-1" src="https://chat.openai.com" class="active"></webview>
+    <webview id="webview-2" src="https://notebooklm.google.com"></webview>
+    <webview id="webview-3" src="https://gemini.google.com"></webview>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
