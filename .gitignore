@@ -14,10 +14,6 @@ webpack-stats.json
 # Electron
 *.asar
 
-# CSS
-*.css
-*.css.map
-
 # VS Code
 .vscode/
 

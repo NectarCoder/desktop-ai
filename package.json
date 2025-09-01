@@ -4,11 +4,10 @@
   "description": "One place to access all your AI applications.",
   "main": "dist/main.js",
   "scripts": {
-    "build": "npm run build-css && tsc",
-    "build-css": "sass src/renderer/styles.scss src/renderer/styles.css",
+    "build": "tsc && webpack",
     "start": "npm run build && electron .",
-    "dev": "tsc --watch & electron .",
-    "clean": "node clean.js"
+    "dev": "tsc --watch & webpack --watch & electron .",
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -25,8 +24,21 @@
   "devDependencies": {
     "@types/electron": "^1.4.38",
     "@types/node": "^24.3.0",
+    "css-loader": "^7.1.2",
     "electron": "^37.4.0",
+    "rimraf": "^6.0.1",
     "sass": "^1.91.0",
-    "typescript": "^5.9.2"
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }
