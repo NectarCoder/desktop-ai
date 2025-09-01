@@ -4,9 +4,11 @@
   "description": "One place to access all your AI applications.",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build-css && tsc",
+    "build-css": "sass src/renderer/styles.scss src/renderer/styles.css",
     "start": "npm run build && electron .",
-    "dev": "tsc --watch & electron ."
+    "dev": "tsc --watch & electron .",
+    "clean": "node clean.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
     "@types/electron": "^1.4.38",
     "@types/node": "^24.3.0",
     "electron": "^37.4.0",
+    "sass": "^1.91.0",
     "typescript": "^5.9.2"
   }
 }

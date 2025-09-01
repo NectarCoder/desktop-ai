@@ -1,0 +1,49 @@
+/*********************************************************
+!!!! ATTENTION: DO NOT EDIT THE STANDARD CSS FILES !!!!
+    ALL CHANGES MUST BE MADE IN THIS styles.scss FILE.
+THE STANDARD CSS FILES WILL BE MODIFIED DURING BUILD TIME.
+**********************************************************/
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.tab-bar {
+  display: flex;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-right: 1px solid #ccc;
+  background-color: #e9e9e9;
+}
+
+.tab.active {
+  background-color: #fff;
+}
+
+.content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+webview {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+webview.active {
+  visibility: visible;
+}
