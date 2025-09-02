@@ -1,6 +1,10 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 
+require('electron-reload')(__dirname, {
+  electron: require(`${__dirname}/../node_modules/electron`)
+});
+
 let mainWindow: BrowserWindow;
 
 function createWindow() {
@@ -15,7 +19,12 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadFile(path.join(__dirname, '../src/renderer/index.html'));
+  // In development, load from webpack dev server
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.loadURL('http://localhost:3000');
+  } else {
+    mainWindow.loadFile(path.join(__dirname, '../src/renderer/index.html'));
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null!;

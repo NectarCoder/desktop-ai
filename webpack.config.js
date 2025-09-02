@@ -23,4 +23,12 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+    devServer: {
+      static: {
+        directory: require('path').join(__dirname, 'src/renderer'),
+      },
+      hot: true,
+      port: 3000,
+      open: false,
+    },
 };
