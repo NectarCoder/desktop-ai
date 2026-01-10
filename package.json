@@ -22,28 +22,28 @@
   },
   "homepage": "https://github.com/NectarCoder/desktop-ai#readme",
   "devDependencies": {
-    "@types/electron": "^1.4.38",
-    "@types/node": "^24.3.0",
+    "@types/electron": "^1.6.12",
+    "@types/node": "^25.0.5",
     "concurrently": "^9.2.1",
-    "cross-env": "^10.0.0",
+    "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
-    "electron": "^37.4.0",
+    "electron": "^39.2.7",
     "electron-reload": "^2.0.0-alpha.1",
-    "rimraf": "^6.0.1",
-    "sass": "^1.91.0",
-    "sass-loader": "^16.0.5",
+    "rimraf": "^6.1.2",
+    "sass": "^1.97.2",
+    "sass-loader": "^16.0.6",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.4",
-    "typescript": "^5.9.2",
-    "wait-on": "^8.0.4",
-    "webpack": "^5.101.3",
+    "typescript": "^5.9.3",
+    "wait-on": "^9.0.3",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   }
 }
