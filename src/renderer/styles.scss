@@ -22,7 +22,9 @@ body,
 }
 
 /* Better box sizing to avoid unexpected overflow from padding/borders */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -45,11 +47,13 @@ body,
 
 .content {
   flex: 1;
-  display: flex; /* allow children to stretch */
+  display: flex;
+  /* allow children to stretch */
   position: relative;
   overflow: hidden;
   background: rgb(255, 0, 0);
-  min-height: 0; /* allow flex children to shrink/grow correctly */
+  min-height: 0;
+  /* allow flex children to shrink/grow correctly */
 }
 
 /* Make the webview behave like a block-level, absolutely-positioned element
@@ -58,7 +62,8 @@ body,
 webview {
   display: block;
   position: relative;
-  flex: 1 1 0; /* flex-basis:0 avoids intrinsic sizing that can clip the element */
+  flex: 1 1 0;
+  /* flex-basis:0 avoids intrinsic sizing that can clip the element */
   align-self: stretch;
   width: 100%;
   height: 100%;
