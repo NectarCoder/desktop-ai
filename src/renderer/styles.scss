@@ -4,74 +4,134 @@
 THE STANDARD CSS FILES WILL BE MODIFIED DURING BUILD TIME.
 **********************************************************/
 
-.app {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+:root {
+  --bg-app: #0f0f0f;
+  --bg-tab-bar: #1a1a1a;
+  --bg-tab-default: transparent;
+  --bg-tab-hover: #2a2a2a;
+  --bg-tab-active: #2f2f2f;
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+  --border-color: #333333;
+  --accent-color: #2196f3;
+  --tab-radius: 8px;
+  --transition-speed: 0.2s;
 }
 
-/* Ensure the page has no default margins and fills the viewport */
-html,
-body,
-#root {
+html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden; /* Prevent body scroll, everything is in .app */
 }
 
-/* Better box sizing to avoid unexpected overflow from padding/borders */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-app);
 }
 
 .tab-bar {
   display: flex;
-  background-color: #f1f1f1;
-  border-bottom: 1px solid #ccc;
+  align-items: center;
+  background-color: var(--bg-tab-bar);
+  height: 44px;
+  padding: 0 8px;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+  -webkit-app-region: drag; /* Allow window dragging from tab bar */
 }
 
 .tab {
-  padding: 10px 20px;
+  -webkit-app-region: no-drag; /* Allow clicking on tabs */
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  height: 36px;
+  margin-top: 8px; /* Push to bottom of tab bar */
+  border-radius: var(--tab-radius) var(--tab-radius) 0 0;
+  background-color: var(--bg-tab-default);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  border-right: 1px solid #ccc;
-  background-color: #e9e9e9;
-}
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  border: 1px solid transparent;
+  border-bottom: none;
+  max-width: 200px;
+  min-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-.tab.active {
-  background-color: #fff;
+  &:hover {
+    background-color: var(--bg-tab-hover);
+    color: var(--text-primary);
+  }
+
+  &.active {
+    background-color: var(--bg-tab-active);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      border-radius: 2px 2px 0 0;
+    }
+  }
+
+  /* Favicon or Icon style if needed */
+  .tab-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
 }
 
 .content {
   flex: 1;
   display: flex;
-  /* allow children to stretch */
   position: relative;
   overflow: hidden;
-  background: rgb(255, 0, 0);
-  min-height: 0;
-  /* allow flex children to shrink/grow correctly */
+  background-color: var(--bg-app);
+  width: 100%;
 }
 
-/* Make the webview behave like a block-level, absolutely-positioned element
-   that exactly fills the `.content` area. Use inset to avoid off-by-one
-   rounding issues that can trigger scrollbars. */
+/* 
+ * Webview Styling
+ * 'display: flex' on parent .content + flex: 1 on webview 
+ * ensures it takes full remaining space 
+ */
 webview {
-  display: block;
-  position: relative;
-  flex: 1 1 0;
-  /* flex-basis:0 avoids intrinsic sizing that can clip the element */
-  align-self: stretch;
+  display: flex;
+  flex: 1;
   width: 100%;
   height: 100%;
-  min-height: 0;
-  visibility: hidden;
-  border: 0;
+  border: none;
+  background: white; /* Prevent transparent flash */
 }
 
-webview.active {
-  visibility: visible;
+/* Hide inactive webviews but keep them in DOM to preserve state */
+webview:not(.active) {
+  display: none !important; 
+  /* Using display: none instead of visibility: hidden ensures it doesn't take space */
 }
