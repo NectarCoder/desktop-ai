@@ -1,6 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.scss';
+import { TitleBar } from './components/TitleBar';
+import { Sidebar } from './components/Sidebar';
+import { usePersistedState } from './hooks/usePersistedState';
 
 declare global {
   namespace JSX {
@@ -26,41 +29,48 @@ const TABS: TabData[] = [
 ];
 
 const App: React.FC = () => {
-  const [activeTabId, setActiveTabId] = React.useState<string>(TABS[0].id);
+  const [activeTabId, setActiveTabId] = useState<string>(TABS[0].id);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Helper to inject CSS into webviews to ensure they look clean
+  // Persist the active tab
+  usePersistedState('activeTabId', activeTabId, setActiveTabId);
+  // Persist sidebar state
+  usePersistedState('sidebarCollapsed', !sidebarOpen, (collapsed) => setSidebarOpen(!collapsed));
+
   const handleDomReady = (event: any) => {
     const webview = event.target;
     if (!webview) return;
-
-    // Inject CSS to remove potential scrollbars on the body if they aren't needed
-    // and ensure height is 100%
-    const css = `
-      html, body { 
-        height: 100% !important; 
-        width: 100% !important;
-        margin: 0 !important; 
-        padding: 0 !important;
-        overflow: hidden !important; /* Let the scrollable container scroll, not body */
-      }
-      /* Many SPAs scroll a wrapper div, this generic fix helps some, 
-         but we should be careful not to break scrolling. 
-         'overflow: auto' on body is usually safer than hidden. 
-      */
-      body { overflow: auto !important; }
-      
-      /* Hide some common headers if desired ? */
-    `;
-
-    try {
-      webview.insertCSS(css);
-    } catch (err) {
-      console.error('Failed to inject CSS', err);
+    if (typeof webview.insertCSS === 'function') {
+      const css = `
+          html, body { 
+            height: 100% !important; 
+            width: 100% !important;
+            margin: 0 !important; 
+            padding: 0 !important;
+            overflow: hidden !important; 
+          }
+          body { overflow: auto !important; }
+        `;
+      webview.insertCSS(css).catch((e: any) => console.error(e));
     }
   };
 
   return (
     <div className="app">
+      <TitleBar
+        onMenuClick={() => setSidebarOpen(true)}
+        isSidebarOpen={sidebarOpen}
+      />
+
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onOpenShortcuts={() => console.log('Shortcuts clicked')}
+        onOpenSettings={() => console.log('Settings clicked')}
+      />
+
+      <div style={{ height: '44px', flexShrink: 0 }}></div>
+
       <div className="tab-bar">
         {TABS.map((tab) => (
           <div
@@ -68,21 +78,24 @@ const App: React.FC = () => {
             className={`tab ${activeTabId === tab.id ? 'active' : ''}`}
             onClick={() => setActiveTabId(tab.id)}
           >
-            {/* Placeholder for icon if we had one */}
             <span className="tab-name">{tab.name}</span>
           </div>
         ))}
       </div>
+
       <div className="content">
         {TABS.map((tab) => (
           <webview
             key={tab.id}
             src={tab.url}
+            partition={`persist:${tab.id}`}
             className={activeTabId === tab.id ? 'active' : ''}
-            // @ts-ignore - webview types are tricky
+            // @ts-ignore
             onDomReady={handleDomReady}
-            // Essential to keep the state alive while hidden
-            permissionrequest="true"
+            // @ts-ignore
+            allowpopups="true"
+            // @ts-ignore
+            webpreferences="contextIsolation=true, nodeIntegration=false"
           />
         ))}
       </div>

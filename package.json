@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/electron": "^1.6.12",
     "@types/node": "^25.0.5",
+    "@types/uuid": "^10.0.0",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
@@ -41,9 +42,16 @@
     "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
+    "electron-store": "^8.1.0",
+    "lucide-react": "^0.562.0",
+    "motion": "^12.27.1",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "uuid": "^13.0.0"
   }
 }
